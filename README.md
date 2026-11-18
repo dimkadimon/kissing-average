@@ -145,7 +145,7 @@ higher-dimensional analogue, and it is checked rather than asserted.
 
 ## 4. The combinatorial search: what it finds, and the trap in it
 
-§7 of the previous revision said the next attack should be a combinatorial search over
+The previous revision's §8 said the next attack should be a combinatorial search over
 polytopes, maximising the ridge-facet ratio, since $\kappa = 2f_1(Q)/f_0(Q)$ for the
 E-construction.  I ran it.  It produces a number that beats the record and the number is
 worthless, for an instructive reason.
