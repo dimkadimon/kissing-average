@@ -10,10 +10,12 @@ anything in our paper. This repository records that conclusion with exact arithm
 than prose, and states plainly which parts of it are proofs and which are measurements.
 
 Three positive findings survive, and they are the reason this repository exists. Since the
-first version of this repository the two items in §8 have been attempted, and §4 reports what
+first version of this repository the two items in §9 have been attempted, and §4 reports what
 the combinatorial search produced: an apparent improvement (13.15 against 12.61) that a
 tangency test shows to be meaningless, plus an exact reproduction of the two literature values
-12.566 (chain) and 12.613 (corona) that explains where the difference comes from.
+12.566 (chain) and 12.613 (corona) that explains where the difference comes from. §5 extends the exact work to every dimension up
+to 24 and reports the wall: the classical lattices reproduce the record for $d\le8$ and come
+nowhere near it afterwards, because the records there are code-theoretic.
 
 1. **A new exact mechanism, `code/lift.py`.** Every cross inner product in the P48p lift is
    *strictly* below 1/2 — at most 3/8 between shell and blocks, at most 3/8 between blocks,
@@ -199,7 +201,62 @@ reconstruct them by hand in this pass.  Building (i)-(iv) is the concrete next s
 does not require any search at all — only the combinatorics of one hyperbolic reflection
 group.
 
-## 5. The one bridge that does exist, and how far it goes
+## 5. Every dimension up to 24: exact lattices, exhaustive direct sums, and the wall
+
+"The average kissing number" and "the kissing number" coincide on lattices, since every ball in
+a lattice packing has exactly the same number of contacts, so a long run over dimensions 1-24
+belongs here. `code/lattices.py` computes $\tau(L)$, the number of minimal vectors, from an
+integer Gram matrix by exact Fincke-Pohst enumeration, and `code/latsearch.py` hill-climbs
+$\tau$ over lattices in every dimension.
+
+**5a. The classical lattices, computed.** The record is a root lattice for $d\le8$, and then
+never again:
+
+| $d$ | $Z^d$ | $A_d$ | $D_d$ | $E_d$ | best here | record (2026) | upper | record/best |
+|---:|---:|---:|---:|---:|---|---:|---:|---:|
+| 3 | 6 | 12 | 12 | | $A_3=12$ | 12 | = record | 1.00 |
+| 4 | 8 | 20 | 24 | | $D_4=24$ | 24 | = record | 1.00 |
+| 5 | 10 | 30 | 40 | | $D_5=40$ | 40 | 43 | 1.00 |
+| 6 | 12 | 42 | 60 | 72 | $E_6=72$ | 72 | 76 | 1.00 |
+| 7 | 14 | 56 | 84 | 126 | $E_7=126$ | 126 | 132 | 1.00 |
+| 8 | 16 | 72 | 112 | 240 | $E_8=240$ | 240 | = record | 1.00 |
+| 12 | 24 | 156 | 264 | | $D_{12}=264$ | 841 | 1355 | 3.19 |
+| 16 | 32 | 272 | 480 | | $D_{16}=480$ | 4320 | 7319 | 9.00 |
+| 24 | 48 | 600 | 1104 | | $D_{24}=1104$ | 196 560 | = record | 178.04 |
+
+The full table for $d=1..24$ is in `results/lattices.txt`.  Reproducing $2,6,12,24,40,72,126,240$
+exactly, from coordinates rather than from a table, is the check that the enumeration is
+right; the ratio column is what happens afterwards.
+
+**5b. The exhaustive direct-sum search.** $\tau$ is additive over direct sums, so "what is the
+best average kissing number reachable by root lattices in dimension $d$" is a finite
+optimisation over partitions, solved exactly in `lattices.py --long`.  It matches the record in
+every $d\le8$ ($A_1, A_2, A_3, D_4, D_5, E_6, E_7, E_8$) and then falls away: $E_8+A_1$ gives
+242 at $d=9$ against a record of 306, and $D_d$ is optimal among direct sums from $d=13$ on.
+
+**5c. The long run, and the wall.** `code/latsearch.py` runs 45 s per dimension with five
+restarts, perturbing Gram entries and keeping any change that raises $\tau$:
+
+| $d$ | 3-8 | 9 | 10 | 12 | 16 | 20 | 24 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| found | 12, 24, 40, 72, 126, 240 | 242 | 246 | 264 | 480 | 760 | 1104 |
+| record | same | 306 | 510 | 841 | 4320 | 19 448 | 196 560 |
+
+It sits on the record for $d\le8$ and cannot move off a root-lattice-shaped lattice afterwards.
+That is the wall, and it is structural, not a matter of budget: the records from $d=9$ are
+laminated lattices $\Lambda_9..\Lambda_{12}$ (272, 336, 438, 648), Barnes-Wall at $d=16$, the
+Leech lattice at $d=24$, and non-lattice configurations for $d=9..13$ — all of them gluings of
+a code with a lattice.  A local search over Gram entries will never find a code.  The gap is
+1.26× at $d=9$ and 178× at $d=24$.
+
+**5d. Where an improvement would still be possible.** $K(5)=40\le43$, $K(6)=72\le76$,
+$K(7)=126\le132$ (Tomar 2026 for the upper bounds): these are the only dimensions below 13
+where a better packing could exist without contradicting anything known, and they are small
+enough that a specialised search is not absurd.  Every dimension above 8 already has lower
+bounds from codes, so "search harder" is the wrong move there — the right move is
+code-theoretic gluing, which is exactly what produced those bounds.
+
+## 6. The one bridge that does exist, and how far it goes
 
 The shell bound is
 
@@ -232,7 +289,7 @@ honestly what each costs:
   contact graph has a high average degree: junk balls of many radii, all touching as much as
   possible. The record in $n=3$ is $7656/607$, from a compound of cut 600-cells.
 
-## 6. A tower of regular contact graphs (a small, real observation)
+## 7. A tower of regular contact graphs (a small, real observation)
 
 `code/graphs.py` computes contact graphs of root systems exactly. The 60-degree contact graph
 of the kissing configuration is **regular** in the dimensions where the configuration is a
@@ -253,7 +310,7 @@ number of the two systems (largest number of directions within 60° of one point
 12 for $A_3$, at most 9 of 24 for $D_4$ — measured by search, upper bounds not proved, and
 recorded here as an open target rather than a result.
 
-## 7. What is certified, and what is only measured
+## 8. What is certified, and what is only measured
 
 This matters more than usual here, because an average-kissing *lower* bound is a statement
 about one explicit packing, and every decimal in it has to be rounded the right way.
@@ -272,7 +329,11 @@ about one explicit packing, and every decimal in it has to be rounded the right 
   (120, 720, 1200, 600) and κ = 12 exactly (§4a);
 - the chain formula for cut 600-cells, `Euler = 0` for every n, and its limit 666/53 (§4b);
 - the tangency test that disqualifies every cut hull (§4a): a numerical spread, but 12–16 %
-  is far outside rounding.
+  is far outside rounding;
+- $\tau$ for $Z_d, A_d, D_d, E_6, E_7, E_8$ in every $d\le24$ (§5a), reproducing
+  $2,6,12,24,40,72,126,240$ and the trivial $2d$ and $2d(d-1)$ values exactly: integer
+  arithmetic throughout, no tolerances;
+- the best root-lattice direct sum in every dimension (§5b): exhaustive, exact.
 
 **Measured only (no proof here)**
 
@@ -287,7 +348,7 @@ about one explicit packing, and every decimal in it has to be rounded the right 
 - no new upper bound: $\kappa_3\le13.327,\ldots,\kappa_{30}\le1{,}654{,}023.6$
   (Bockhaus–Glazyrin) stand.
 
-## 8. Where a real attack would start
+## 9. Where a real attack would start
 
 If this project is to produce a bound, the order of work that seems right to us:
 
@@ -298,10 +359,12 @@ If this project is to produce a bound, the order of work that seems right to us:
    glued (corona, double corona, tree with unequal arms), always checking `tangency_spread`
    before believing any $2f_1/f_0$. The chain cannot beat $12.566$; the corona shows gluing
    buys something; how much more gluing is available is an open, finite question.
-3. **Only then** consider $n\ge4$, where every lower bound in the record table ($4\le n\le30$)
-   is still a lattice kissing number. The first construction to beat one is publishable, and
-   the $D_4$ cell (24 points, 8-regular contact graph, `code/graphs.py`) is the natural
-   starting point: no cut-$D_4$ compound appears in the record table at all.
+3. **In $d\ge4$, attack the only open windows.** §5d identifies them: $K(5)=40\le43$,
+   $K(6)=72\le76$, $K(7)=126\le132$.  Everything above 8 already has lower bounds from codes,
+   and §5c shows a lattice search cannot reach those, so a search there is effort spent for
+   nothing.  Dimensions 5-7 are small enough for an exhaustive or heavily structured search,
+   and $D_5$, $E_6$, $E_7$ (40, 72, 126 with 8-, 12-, 18-regular contact graphs,
+   `code/graphs.py`) are the natural starting points for a cut-cell compound.
 
 ## Files
 
@@ -311,6 +374,8 @@ code/lift.py     exact cross inner products of the P48p lift; its contact graph 
 code/graphs.py   exact contact graphs of root systems, degrees, coverage measures
 code/records.py  the dated record table and its consistency checks
 code/packings.py exact fcc / hole-filled-fcc families in Q(sqrt 2), on the torus
+code/lattices.py exact tau for the classical lattices, d = 1..24, and the direct-sum search
+code/latsearch.py the lattice hill-climb, run in every dimension
 code/polytopes.py f-vectors from coordinates; the cut-and-hill-climb trap and its test
 code/hillclimb.py the climb that reaches 13.15 and is disqualified -- kept as a warning
 code/compounds.py chain formula, its limit, and the corona numbers

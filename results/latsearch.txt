@@ -1,0 +1,38 @@
+lattice hill-climb over d = 3..24: maximise tau(L), exact Fincke-Pohst counting
+budget 45 s per dimension (5 restarts of 9 s), seeds = classical lattices
+the printed tau is the best found over the restarts; every count is exact
+
+ d  tau found   record  record/found  verdict
+ 3         12       12          1.00  matches the record
+ 4         24       24          1.00  matches the record
+ 5         40       40          1.00  matches the record
+ 6         72       72          1.00  matches the record
+ 7        126      126          1.00  matches the record
+ 8        240      240          1.00  matches the record
+ 9        242      306          1.26  factor 1.26 short
+10        246      510          2.07  factor 2.07 short
+11        252      604          2.40  factor 2.40 short
+12        264      841          3.19  factor 3.19 short
+13        312     1154          3.70  factor 3.70 short
+14        364     1932          5.31  factor 5.31 short
+15        420     2564          6.10  factor 6.10 short
+16        480     4320          9.00  factor 9.00 short
+17        544     5730         10.53  factor 10.53 short
+18        612     8358         13.66  factor 13.66 short
+19        684    12460         18.22  factor 18.22 short
+20        760    19448         25.59  factor 25.59 short
+21        840    31560         37.57  factor 37.57 short
+22        924    49896         54.00  factor 54.00 short
+23       1012    93150         92.05  factor 92.05 short
+24       1104   196560        178.04  factor 178.04 short
+
+the wall is the point of this table. d <= 8: the record is a root lattice and the
+climb sits on it. From d = 9 the records are Lambda_9..12 (272, 336, 438, 648),
+Barnes-Wall (4320 at d = 16) and the Leech lattice (196560 at d = 24) -- gluings of a
+code with a lattice, not perturbations of a root lattice -- so a local search over Gram
+entries cannot reach them. The shortfall is 1.26x at d = 9 and 178x at d = 24.
+
+what this does not say: it is not a new bound in either direction. It says that 'run a
+search in each dimension' is not a route to a better lower bound above d = 8: the lower
+bounds there are code-theoretic (Leech, Barnes-Wall, P_9a..P_12a) and matching them
+needs the codes, not a search.

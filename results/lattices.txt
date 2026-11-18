@@ -1,0 +1,66 @@
+exact kissing numbers of the classical lattices, d = 1..24
+(tau = number of minimal vectors, from integer Gram matrices by Fincke-Pohst)
+
+ d    Z_d   A_d   D_d     E    best here    record    upper  record/best
+ 1      2      2      -      -        Z_1=2         2  = record         1.00
+ 2      4      6      4      -        A_2=6         6  = record         1.00
+ 3      6     12     12      -       A_3=12        12  = record         1.00
+ 4      8     20     24      -       D_4=24        24  = record         1.00
+ 5     10     30     40      -       D_5=40        40       43         1.00
+ 6     12     42     60     72       E_6=72        72       76         1.00
+ 7     14     56     84    126      E_7=126       126      132         1.00
+ 8     16     72    112    240      E_8=240       240  = record         1.00
+ 9     18     90    144      -      D_9=144       306      363         2.12
+10     20    110    180      -     D_10=180       510      552         2.83
+11     22    132    220      -     D_11=220       604      867         2.75
+12     24    156    264      -     D_12=264       841     1355         3.19
+13     26    182    312      -     D_13=312      1154     2064         3.70
+14     28    210    364      -     D_14=364      1932     3174         5.31
+15     30    240    420      -     D_15=420      2564     4853         6.10
+16     32    272    480      -     D_16=480      4320     7319         9.00
+17     34    306    544      -     D_17=544      5730    10978        10.53
+18     36    342    612      -     D_18=612      8358    16406        13.66
+19     38    380    684      -     D_19=684     12460    24417        18.22
+20     40    420    760      -     D_20=760     19448    36195        25.59
+21     42    462    840      -     D_21=840     31560    53524        37.57
+22     44    506    924      -     D_22=924     49896    80810        54.00
+23     46    552   1012      -    D_23=1012     93150   122351        92.05
+24     48    600   1104      -    D_24=1104    196560  = record       178.04
+
+reading of the table
+  * d <= 8: the record is a root lattice and is reproduced exactly; the values are
+    K = 2, 6, 12, 24, 40, 72, 126, 240 and are known to be optimal.
+  * d = 9..24: no root lattice comes close, and record/best grows without bound
+    (2.1 at d = 9, 178 at d = 24). The records are laminated lattices Lambda_9..12
+    (272, 336, 438, 648), Barnes-Wall (d = 16, 4320), the Leech lattice (d = 24,
+    196,560) and non-lattice configurations for d = 9..13; none of them is a root
+    lattice and none is built here. The ratio is a statement about root lattices.
+  * d = 5, 6, 7 have K = 40, 72, 126 with upper bounds 43, 76, 132 (Tomar 2026):
+    these are the smallest dimensions where a better packing might exist.
+
+exhaustive direct-sum search: maximise tau over all direct sums of root lattices
+(tau is additive over direct sums, so this is an exact finite optimisation)
+  d =  1: best root-lattice direct sum A1           tau =       2   record       2   ratio   1.00
+  d =  2: best root-lattice direct sum A2           tau =       6   record       6   ratio   1.00
+  d =  3: best root-lattice direct sum A3           tau =      12   record      12   ratio   1.00
+  d =  4: best root-lattice direct sum D4           tau =      24   record      24   ratio   1.00
+  d =  5: best root-lattice direct sum D5           tau =      40   record      40   ratio   1.00
+  d =  6: best root-lattice direct sum E6           tau =      72   record      72   ratio   1.00
+  d =  7: best root-lattice direct sum E7           tau =     126   record     126   ratio   1.00
+  d =  8: best root-lattice direct sum E8           tau =     240   record     240   ratio   1.00
+  d =  9: best root-lattice direct sum E8+A1        tau =     242   record     306   ratio   1.26
+  d = 10: best root-lattice direct sum E8+A2        tau =     246   record     510   ratio   2.07
+  d = 11: best root-lattice direct sum E8+A3        tau =     252   record     604   ratio   2.40
+  d = 12: best root-lattice direct sum E8+D4        tau =     264   record     841   ratio   3.19
+  d = 13: best root-lattice direct sum D13          tau =     312   record    1154   ratio   3.70
+  d = 14: best root-lattice direct sum D14          tau =     364   record    1932   ratio   5.31
+  d = 15: best root-lattice direct sum D15          tau =     420   record    2564   ratio   6.10
+  d = 16: best root-lattice direct sum D16          tau =     480   record    4320   ratio   9.00
+  d = 17: best root-lattice direct sum D17          tau =     544   record    5730   ratio  10.53
+  d = 18: best root-lattice direct sum D18          tau =     612   record    8358   ratio  13.66
+  d = 19: best root-lattice direct sum D19          tau =     684   record   12460   ratio  18.22
+  d = 20: best root-lattice direct sum D20          tau =     760   record   19448   ratio  25.59
+  d = 21: best root-lattice direct sum D21          tau =     840   record   31560   ratio  37.57
+  d = 22: best root-lattice direct sum D22          tau =     924   record   49896   ratio  54.00
+  d = 23: best root-lattice direct sum D23          tau =    1012   record   93150   ratio  92.05
+  d = 24: best root-lattice direct sum D24          tau =    1104   record  196560   ratio 178.04
