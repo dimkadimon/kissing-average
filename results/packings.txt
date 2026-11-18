@@ -1,0 +1,16 @@
+exact contact graphs, radii in Q(sqrt 2) = 0.7071067811865476 and 0.2928932188134524
+
+  fcc (torus 4^3)                    N=  32 E=  192 avg=12.0000  deg 12..12
+  fcc + octahedral holes (torus 4^3) N=  36 E=  216 avg=12.0000  deg 6..15
+
+  fcc (torus 6^3)                    N= 108 E=  648 avg=12.0000  deg 12..12
+  fcc + octahedral holes (torus 6^3) N= 140 E=  840 avg=12.0000  deg 6..18
+
+  reading: on the torus (periodic family, no boundary) fcc has average degree
+  exactly 12, and filling every octahedral hole also gives exactly 12: the
+  interstitial trick is neutral, which is why the 7656/607 record needs a
+  different construction.
+
+  tetrahedral holes, by the same count: fcc has two per ball, each such ball has
+  exactly 4 contacts, so filling them gives E = 6n + 8n = 14n on N = 3n balls,
+  average 28/3 = 9.333 < 12 -- strictly worse than leaving the holes empty.
