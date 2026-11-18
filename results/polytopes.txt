@@ -1,0 +1,22 @@
+4-polytope            f0     f1      f2     f3     f1/f0    kappa = 2 f1/f0
+5-cell                   5     10      10      5   2.0000     4.0000
+8-cell (tesseract)      16     74     116     58   4.6250     9.2500
+16-cell                  8     24      32     16   3.0000     6.0000
+24-cell                 24    120     192     96   5.0000    10.0000
+600-cell               120    720    1200    600   6.0000    12.0000
+
+reference points
+  600-cell: kappa = 12 exactly, the same value as fcc computed in code/packings.py
+  record (cut 600-cell corona): 7656/607 = 12.6129, f1/f0 = 6.30643
+  chain of n cut cells: 666/53 = 12.5660 (the weaker Kuperberg-Schramm value)
+
+cutting the 600-cell: the ratio rises, and so does the tangency error
+  cut  0: f0=120 2 f1/f0 = 12.0000  facet-distance spread  0.00%   tangent
+  cut  1: f0=119 2 f1/f0 = 12.0336  facet-distance spread 12.64%   NOT tangent -> not a bound
+  cut  4: f0=116 2 f1/f0 = 12.0690  facet-distance spread 12.77%   NOT tangent -> not a bound
+  cut 12: f0=108 2 f1/f0 = 12.3704  facet-distance spread 13.14%   NOT tangent -> not a bound
+  cut 28: f0= 92 2 f1/f0 = 12.5435  facet-distance spread 15.82%   NOT tangent -> not a bound
+
+why this is not a search over all polytopes: the cyclic polytope C_4(n) is
+neighbourly, so f1 = C(n,2) and f1/f0 -> n/2 is unbounded. The upper bound on
+kappa must come from ridge tangency (geometry), not from counting.

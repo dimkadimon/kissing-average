@@ -1,0 +1,33 @@
+start (12.0, 120, 720, 600)
+step 1: kappa=12.05042 f0=119 f1=717 f3=598
+step 2: kappa=12.11864 f0=118 f1=715 f3=597
+step 3: kappa=12.18803 f0=117 f1=713 f3=596
+step 4: kappa=12.25862 f0=116 f1=711 f3=595
+step 5: kappa=12.33043 f0=115 f1=709 f3=594
+step 6: kappa=12.38596 f0=114 f1=706 f3=592
+step 7: kappa=12.44248 f0=113 f1=703 f3=590
+step 8: kappa=12.48214 f0=112 f1=699 f3=587
+step 9: kappa=12.52252 f0=111 f1=695 f3=584
+step 10: kappa=12.56364 f0=110 f1=691 f3=581
+step 11: kappa=12.60550 f0=109 f1=687 f3=578
+step 12: kappa=12.64815 f0=108 f1=683 f3=575
+step 13: kappa=12.69159 f0=107 f1=679 f3=572
+step 14: kappa=12.73585 f0=106 f1=675 f3=569
+step 15: kappa=12.78095 f0=105 f1=671 f3=566
+step 16: kappa=12.82692 f0=104 f1=667 f3=563
+step 17: kappa=12.85437 f0=103 f1=662 f3=559
+step 18: kappa=12.88235 f0=102 f1=657 f3=555
+step 19: kappa=12.91089 f0=101 f1=652 f3=551
+step 20: kappa=12.92000 f0=100 f1=646 f3=546
+step 21: kappa=12.92929 f0=99 f1=640 f3=541
+step 22: kappa=12.97959 f0=98 f1=636 f3=538
+step 23: kappa=13.05155 f0=97 f1=633 f3=536
+step 24: kappa=13.06250 f0=96 f1=627 f3=531
+step 25: kappa=13.07368 f0=95 f1=621 f3=526
+step 26: kappa=13.08511 f0=94 f1=615 f3=521
+step 27: kappa=13.13978 f0=93 f1=611 f3=518
+step 28: kappa=13.15217 f0=92 f1=605 f3=513
+no further improvement at step 29 best kappa 13.15217
+FINAL 13.15217 vs record 12.61285 -- NOT a bound:
+  every hull on this climb has facet distances from the origin spread over 12-16%,
+  so it is not tangent to any sphere and kappa = 2 f1/f0 does not apply.
