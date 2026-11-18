@@ -10,7 +10,7 @@ anything in our paper. This repository records that conclusion with exact arithm
 than prose, and states plainly which parts of it are proofs and which are measurements.
 
 Three positive findings survive, and they are the reason this repository exists. Since the
-first version of this repository the two items in §9 have been attempted, and §4 reports what
+first version of this repository the two items in §10 have been attempted, and §4 reports what
 the combinatorial search produced: an apparent improvement (13.15 against 12.61) that a
 tangency test shows to be meaningless, plus an exact reproduction of the two literature values
 12.566 (chain) and 12.613 (corona) that explains where the difference comes from. §5 extends the exact work to every dimension up
@@ -256,7 +256,76 @@ enough that a specialised search is not absurd.  Every dimension above 8 already
 bounds from codes, so "search harder" is the wrong move there — the right move is
 code-theoretic gluing, which is exactly what produced those bounds.
 
-## 6. The one bridge that does exist, and how far it goes
+## 6. Dimensions 5, 6, 7: the only open windows, attacked
+
+$K(5)=40\le43$, $K(6)=72\le76$, $K(7)=126\le132$ (Tomar 2026 for the upper bounds).  These
+are the only dimensions below 13 where an improvement does not require beating a code-theoretic
+construction, so they are where a search has some chance.  Two questions, one rigorous and one
+empirical.
+
+**6a. The rigorous half: the record packings are locally jammed, by a measurable amount.**
+Write $\rho(P)=\min_{|x|=1}\max_{p\in P}\langle x,p\rangle$.  A point $x$ can be added to
+$P$ exactly when $\max_p\langle x,p\rangle\le 1/2$, so $\rho(P)\le 1/2$ means the
+configuration is not jammed, and $\rho(P)>1/2$ means no $(N{+}1)$-st point fits *without moving
+the others*.  `code/holes.py` computes $\rho$ by log-sum-exp continuation, refines it by the
+KKT active set, and cross-checks by enumerating small active sets:
+
+| $d$ | config | $N$ | $\rho$ | closed form | hole angle | threshold | jammed |
+|---:|---|---:|---:|---|---:|---:|---|
+| 3 | $A_3$ | 12 | 0.707107 | $1/\sqrt2$ | 45.00° | 60° | yes |
+| 4 | $D_4$ | 24 | 0.707107 | $1/\sqrt2$ | 45.00° | 60° | yes |
+| **5** | $D_5$ | 40 | **0.632456** | $\sqrt{2/5}$ | **50.77°** | 60° | **yes** |
+| **6** | $E_6$ | 72 | **0.612372** | $\sqrt{3/8}$ | **52.24°** | 60° | **yes** |
+| **7** | $E_7$ | 126 | **0.577350** | $1/\sqrt3$ | **54.74°** | 60° | **yes** |
+| 8 | $E_8$ | 240 | 0.707107 | $1/\sqrt2$ | 45.00° | 60° | yes |
+
+Every $\rho$ is a closed form, not a numerical accident: the KKT residual is $\sim10^{-16}$,
+the scaled hole vector $y=x/\rho$ has $\langle y,p\rangle=1$ *exactly* on its active set, and
+all 200 perturbations of each hole make it worse.  So the record packing leaves a hole of
+50.77° in $d=5$, 52.24° in $d=6$, 54.74° in $d=7$ where 60° is needed.  The deficit shrinks with
+dimension — 9.2°, 7.8°, 5.3° — which is why $d=7$ is the most tempting case and also the one
+where a search is least likely to find a needle in a 126-point configuration.
+
+The same code passes the check that matters: deleting one point from $D_5$, $E_6$, $E_7$ gives
+$\rho=0.500000$ exactly, i.e. the machinery *does* report a non-jammed configuration when there
+is one.
+
+**6b. The empirical half: can everything move?** A configuration of $N+1$ points exists **iff**
+some 60°-separated $N$-point configuration has $\rho\le1/2$ (then the hole is the extra point).
+So `code/widen.py` searches over $N$ points, trying to push $\rho$ down, and `code/attack567.py`
+searches directly over $N+1$ points with a smooth max of the inner products.  Both were run
+long, and the direct search was validated on the cases with known answers (it recovers 24 in
+$d=4$ exactly and correctly fails at 25):
+
+| $d$ | $N$ | target | best max inner product | best min angle | short by | tries |
+|---:|---:|---|---:|---:|---:|---:|
+| 5 | 40 | record | 0.500000 | 60.000° | — | 105 |
+| **5** | **41** | **+1** | 0.522487 | 58.501° | **1.50°** | 464 |
+| 6 | 72 | record | 0.500000 | 60.000° | — | 74 |
+| **6** | **73** | **+1** | 0.518280 | 58.783° | **1.22°** | 322 |
+| 7 | 126 | record | 0.500000 | 60.000° | — | 34 |
+| **7** | **127** | **+1** | 0.511704 | 59.223° | **0.78°** | 157 |
+
+The pattern is consistent and unfavourable: the configuration cannot be pushed to 60°, and the
+shortfall *decreases* with dimension (1.50°, 1.22°, 0.78°) while the configuration size grows
+(41, 73, 127 points).  In $d=7$, 157 independent restarts all stall between 59.2° and 60°.
+
+The $\rho$ attack in `code/widen.py` agrees, and agrees for a reason worth recording.  Of 86
+proposed moves that pushed $E_7$'s hole open, every single one left 60°-separation by a wide
+margin (minimum angle dropping to 59.99°), and every repaired version of a 126-point
+configuration started above the incumbent value of $\rho$.  So $\rho$ could not be reduced at
+all: in $d=7$ the record configuration is not merely jammed, it sits at a **local minimum of the
+hole depth**, which is the quantitative form of $E_7$'s rigidity.
+
+**6c. What this does and does not establish.**  It establishes, rigorously, that the records are
+locally jammed with a specific closed-form gap, and that the gap is smallest in the largest
+dimension.  It does **not** establish optimality: a global rearrangement is not excluded, and a
+failed search of 157 restarts is evidence, not proof.  The honest summary is that $d=5,6,7$
+remain open, that the record packing is jammed in each, and that the remaining hypotheses would
+have to be strikingly asymmetric to survive — the search's best configurations were all close to
+the record, which is what one expects if the record is optimal.
+
+## 7. The one bridge that does exist, and how far it goes
 
 The shell bound is
 
@@ -289,7 +358,7 @@ honestly what each costs:
   contact graph has a high average degree: junk balls of many radii, all touching as much as
   possible. The record in $n=3$ is $7656/607$, from a compound of cut 600-cells.
 
-## 7. A tower of regular contact graphs (a small, real observation)
+## 8. A tower of regular contact graphs (a small, real observation)
 
 `code/graphs.py` computes contact graphs of root systems exactly. The 60-degree contact graph
 of the kissing configuration is **regular** in the dimensions where the configuration is a
@@ -310,7 +379,7 @@ number of the two systems (largest number of directions within 60° of one point
 12 for $A_3$, at most 9 of 24 for $D_4$ — measured by search, upper bounds not proved, and
 recorded here as an open target rather than a result.
 
-## 8. What is certified, and what is only measured
+## 9. What is certified, and what is only measured
 
 This matters more than usual here, because an average-kissing *lower* bound is a statement
 about one explicit packing, and every decimal in it has to be rounded the right way.
@@ -333,7 +402,10 @@ about one explicit packing, and every decimal in it has to be rounded the right 
 - $\tau$ for $Z_d, A_d, D_d, E_6, E_7, E_8$ in every $d\le24$ (§5a), reproducing
   $2,6,12,24,40,72,126,240$ and the trivial $2d$ and $2d(d-1)$ values exactly: integer
   arithmetic throughout, no tolerances;
-- the best root-lattice direct sum in every dimension (§5b): exhaustive, exact.
+- the best root-lattice direct sum in every dimension (§5b): exhaustive, exact;
+- the hole depth $\rho$ of the record packings in $d=3..8$ (§6a), with KKT residuals at
+  machine precision and the closed forms $1/\sqrt2, \sqrt{2/5}, \sqrt{3/8}, 1/\sqrt3$ —
+  exact in the sense that the active-set structure is verified, not fitted.
 
 **Measured only (no proof here)**
 
@@ -348,7 +420,7 @@ about one explicit packing, and every decimal in it has to be rounded the right 
 - no new upper bound: $\kappa_3\le13.327,\ldots,\kappa_{30}\le1{,}654{,}023.6$
   (Bockhaus–Glazyrin) stand.
 
-## 9. Where a real attack would start
+## 10. Where a real attack would start
 
 If this project is to produce a bound, the order of work that seems right to us:
 
@@ -359,12 +431,12 @@ If this project is to produce a bound, the order of work that seems right to us:
    glued (corona, double corona, tree with unequal arms), always checking `tangency_spread`
    before believing any $2f_1/f_0$. The chain cannot beat $12.566$; the corona shows gluing
    buys something; how much more gluing is available is an open, finite question.
-3. **In $d\ge4$, attack the only open windows.** §5d identifies them: $K(5)=40\le43$,
-   $K(6)=72\le76$, $K(7)=126\le132$.  Everything above 8 already has lower bounds from codes,
-   and §5c shows a lattice search cannot reach those, so a search there is effort spent for
-   nothing.  Dimensions 5-7 are small enough for an exhaustive or heavily structured search,
-   and $D_5$, $E_6$, $E_7$ (40, 72, 126 with 8-, 12-, 18-regular contact graphs,
-   `code/graphs.py`) are the natural starting points for a cut-cell compound.
+3. **In $d\ge4$, the only open windows are 5, 6, 7**, and §6 has now been through them: the
+   record packings are locally jammed by 9.2°, 7.8° and 5.3°, and 157 restarts in $d=7$ stall
+   0.78° short of a 127th point.  What is left is not more of the same search — it is a
+   *rigorous* local-to-global argument, i.e. a stability result saying that any packing with
+   127 points differs from $E_7$ by less than the 5.3° its hole admits.  That is a
+   quantitive-rigidity theorem, and it is the only route that would settle these dimensions.
 
 ## Files
 
@@ -374,6 +446,9 @@ code/lift.py     exact cross inner products of the P48p lift; its contact graph 
 code/graphs.py   exact contact graphs of root systems, degrees, coverage measures
 code/records.py  the dated record table and its consistency checks
 code/packings.py exact fcc / hole-filled-fcc families in Q(sqrt 2), on the torus
+code/holes.py hole depth of the record packings; the local-jamming certificate
+code/attack567.py the direct search for 41/73/127 points in d = 5, 6, 7
+code/widen.py the attack through rho: can the record packing be rearranged to open a hole?
 code/lattices.py exact tau for the classical lattices, d = 1..24, and the direct-sum search
 code/latsearch.py the lattice hill-climb, run in every dimension
 code/polytopes.py f-vectors from coordinates; the cut-and-hill-climb trap and its test

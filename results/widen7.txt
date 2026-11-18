@@ -1,0 +1,10 @@
+d = 7: E7 with N = 126;  rho = 0.577350 (min angle 54.736 deg)
+using rho <= 1/2 as the criterion: an (N+1)-point configuration exists iff we
+can push rho down to 1/2 and keep the points 60-degree separated.
+
+
+best rho reached: 0.577350 after 0 accepted moves
+  that is a hole of angle 54.736 deg
+  the configuration itself has minimum angle 60.000 deg
+  rho stays above 1/2 by 0.077350 (5.264 deg of slack):
+  no extra point fits into any configuration this search reached.

@@ -1,0 +1,48 @@
+the record configurations in dimensions 5, 6, 7, and their deepest holes
+
+rho(P) = min over unit x of max over p in P of <x,p>;  a point can be added iff
+rho(P) <= 1/2, i.e. iff the min angle arccos(rho) is at least 60 degrees.
+
+ d   config   |P|        rho     angle   deficit  jammed?
+ 5       D5    40   0.632456   50.768d    9.232d  yes
+     log-sum-exp 0.632456, KKT refinement 0.632456, 3-subset enumeration 0.707107
+ 6       E6    72   0.612372   52.239d    7.761d  yes
+     log-sum-exp 0.612372, KKT refinement 0.612372, 3-subset enumeration 0.707107
+ 7       E7   126   0.577350   54.736d    5.264d  yes
+     log-sum-exp 0.577350, KKT refinement 0.577350, 3-subset enumeration 0.577350
+
+reading: rho > 1/2 in every case, so no ball can be added to the record packing
+without moving the others. The deficit column is the number of degrees by which the
+deepest hole misses being admissible -- the quantitative version of 'locally jammed'.
+
+this settles only the insertion question. A 41st, 73rd or 127th point might still
+exist if all the points are allowed to move; that is the search in code/attack567.py.
+
+certifying the hole directions (KKT structure and closed form)
+  d = 3 (A3, 12 pts): rho = 0.707106781, 1/rho^2 = 2.000000  [1/sqrt(2)]
+          active set 4, KKT residual 1.14e-16, <y,p> on the active set in [1.000000, 1.000000]
+          local minimum: 200/200 perturbations of the hole make it worse
+  d = 4 (D4, 24 pts): rho = 0.707106781, 1/rho^2 = 2.000000  [1/sqrt(2)]
+          active set 6, KKT residual 2.73e-16, <y,p> on the active set in [1.000000, 1.000000]
+          local minimum: 200/200 perturbations of the hole make it worse
+  d = 5 (D5, 40 pts): rho = 0.632455532, 1/rho^2 = 2.500000  [1/sqrt(2.5)]
+          active set 10, KKT residual 1.16e-16, <y,p> on the active set in [1.000000, 1.000000]
+          local minimum: 200/200 perturbations of the hole make it worse
+  d = 6 (E6, 72 pts): rho = 0.612372436, 1/rho^2 = 2.666667  [1/sqrt(2.66667)]
+          active set 16, KKT residual 1.10e-15, <y,p> on the active set in [1.000000, 1.000000]
+          local minimum: 200/200 perturbations of the hole make it worse
+  d = 7 (E7, 126 pts): rho = 0.577350269, 1/rho^2 = 3.000000  [1/sqrt(3)]
+          active set 27, KKT residual 4.51e-14, <y,p> on the active set in [1.000000, 1.000000]
+          local minimum: 200/200 perturbations of the hole make it worse
+  d = 8 (E8, 240 pts): rho = 0.707106781, 1/rho^2 = 2.000000  [1/sqrt(2)]
+          active set 14, KKT residual 3.68e-09, <y,p> on the active set in [1.000000, 1.000000]
+          local minimum: 200/200 perturbations of the hole make it worse
+
+  so the hole depth of the record packing is a closed form, not a numerical accident:
+  rho = sqrt(2/5) in d = 5, sqrt(3/8) in d = 6, 1/sqrt(3) in d = 7,
+  against the admissibility threshold 1/2 = sqrt(1/4).
+
+sanity check: the same measurement on configurations that are NOT jammed
+  d = 5, D5 minus 1 point: rho = 0.500000, angle 60.000 deg, addable = True
+  d = 6, E6 minus 1 point: rho = 0.500000, angle 60.000 deg, addable = False
+  d = 7, E7 minus 1 point: rho = 0.500000, angle 60.000 deg, addable = False

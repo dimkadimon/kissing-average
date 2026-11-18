@@ -1,0 +1,14 @@
+search for N points on S^{d-1} at mutual angle >= 60 deg (max inner product <= 1/2)
+budgets: [90.0, 420.0] s;  'best angle' is the largest minimum angle reached
+
+ d     N   target  best max<.,.>  best angle  tries  verdict
+ 5    40   record       0.500000     60.000d    105  recovered the record
+ 5    41       +1       0.522487     58.501d    464  infeasible in 464 tries, short by -1.50 deg
+ 6    72   record       0.500000     60.000d     74  recovered the record
+ 6    73       +1       0.518280     58.783d    322  infeasible in 322 tries, short by -1.22 deg
+ 7   126   record       0.500000     60.000d     34  recovered the record
+ 7   127       +1       0.511704     59.223d    157  infeasible in 157 tries, short by -0.78 deg
+
+a feasible row would be a new lower bound and would need the explicit configuration
+saved; every infeasible row is evidence, not proof. The local statement in
+code/holes.py is the rigorous half of the argument.
