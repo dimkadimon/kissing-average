@@ -1,0 +1,10 @@
+validation: a single orbit must reproduce tau(L) and have min distance mu
+ lattice   tau  computed  min d^2 / mu
+      D5    40      40.0   1.000000000
+      E6    72      72.0   1.000000000
+      E7   126     126.0   1.000000000
+      E8   240     240.0   1.000000000
+      D4    24      24.0   1.000000000
+      A3    12      12.0   1.000000000
+d = 5, base lattice D5, tau = 40 (the published lower bound)
+  k = 2 orbits: best average -1.0000 vs tau 40  -> no improvement  (0 restarts)

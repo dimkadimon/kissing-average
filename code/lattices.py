@@ -63,19 +63,16 @@ def cholesky_upper(G):
     return R
 
 
-def min_vectors(G, bound=None):
-    """All nonzero integer x with x^T G x <= bound, exactly (default bound: the minimum).
+def _enumerate(G, bound, want_all=False):
+    """Fincke-Pohst: every integer x with 0 < x^T G x <= bound, exactly.
 
-    Fincke-Pohst: Q(x) = sum_i (R_ii x_i + sum_{j>i} R_ij x_j)^2, so any partial assignment to
-    x_i..x_{n-1} already contributes a non-negative amount and prunes the rest."""
+    The floats only decide where to look.  Rounding can push a partial sum a hair above the
+    bound, and an exactly-minimal vector must not be lost to that, so the pruning bound is
+    loosened and the coordinate window widened; membership is then decided by the exact
+    integer test x^T G x <= bound at the leaf."""
     G = [[int(v) for v in r] for r in G]
     n = len(G)
-    if bound is None:
-        bound = min(G[i][i] for i in range(n))      # x = +-e_i shows tau >= 2n
-    # The floats below only decide where to look.  Rounding can push a partial sum a hair
-    # above the bound, and an exactly-minimal vector must not be lost to that, so the pruning
-    # bound is loosened and the coordinate window widened; membership is then decided exactly.
-    tol = 1e-9 * bound + 1e-9
+    tol = 1e-6 * bound + 1e-9
     R = cholesky_upper(G)
     out = []
 
@@ -100,8 +97,23 @@ def min_vectors(G, bound=None):
                 rec(i - 1, x, acc + t)
 
     rec(n - 1, [0] * n, 0.0)
+    if want_all:
+        return out
     norm = min(q(v) for v in out) if out else None
     return [v for v in out if q(v) == norm], norm
+
+
+def all_vectors(G, bound):
+    """Every integer x with 0 < x^T G x <= bound, exactly."""
+    return _enumerate(G, bound, want_all=True)
+
+
+def min_vectors(G, bound=None):
+    """All nonzero integer x with x^T G x <= bound, exactly (default bound: the minimum)."""
+    G = [[int(v) for v in r] for r in G]
+    if bound is None:
+        bound = min(G[i][i] for i in range(len(G)))    # x = +-e_i shows tau >= 2n
+    return _enumerate(G, bound, want_all=False)
 
 
 # ------------------------------------------------------------------ the classical families
