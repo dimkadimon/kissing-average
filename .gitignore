@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+data/external/
+data/class_p48_7193.npy

@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: "Average kissing numbers: exact checks, negative results and the shell bound"
+authors:
+  - family-names: Kamenetsky
+    given-names: Dmitry
+date-released: 2026-11-19
+license: MIT
+url: "https://github.com/dimkadimon/kissing-average"
+message: "If you use this code, cite it as below."

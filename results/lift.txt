@@ -1,0 +1,11 @@
+  PASS  shell vs block  <= (3/4)(1/2)                        3/8
+  PASS  block vs block  <= (3/4)(1/3)+(1/4)(1/2)             3/8
+  PASS  shell vs tail   <= 0                                 0
+  PASS  block vs tail   <= 0                                 0
+  PASS  within block, <y,y'> = 1/3 : (3/4)(1/3)+1/4          1/2
+  PASS  within block, <y,y'> = 0                             1/4
+
+  -> the contact graph of the lift splits into shell | blocks | tail,
+     with no edges between the parts.
+
+  class file not present; run from a checkout with data/ populated

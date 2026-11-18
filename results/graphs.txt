@@ -1,0 +1,15 @@
+contact graphs of root systems (points, edges, min degree, max degree, #degrees)
+    ('A3', 12, 24, 4, 4, 1)
+    ('D4', 24, 96, 8, 8, 1)
+    ('D5', 40, 240, 12, 12, 1)
+    ('E7', 126, 2016, 32, 32, 1)
+    ('E8', 240, 6720, 56, 56, 1)
+
+degree sets (a single value means the graph is regular)
+    A3 points 12 degrees [4]
+    D4 points 24 degrees [8]
+    D5 points 40 degrees [12]
+    E8 points 240 degrees [56]
+
+max coverage for A3: at least 5 of 12 directions (witness (Fraction(-1, 2), Fraction(0, 1), Fraction(1, 2), Fraction(0, 1))...)
+max coverage for D4: at least 9 of 24 directions (witness (Fraction(0, 1), Fraction(-1, 2), Fraction(-1, 2), Fraction(0, 1))...)
