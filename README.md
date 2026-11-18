@@ -10,7 +10,7 @@ anything in our paper. This repository records that conclusion with exact arithm
 than prose, and states plainly which parts of it are proofs and which are measurements.
 
 Three positive findings survive, and they are the reason this repository exists. Since the
-first version of this repository the two items in §10 have been attempted, and §4 reports what
+first version of this repository the two items in §11 have been attempted, and §4 reports what
 the combinatorial search produced: an apparent improvement (13.15 against 12.61) that a
 tangency test shows to be meaningless, plus an exact reproduction of the two literature values
 12.566 (chain) and 12.613 (corona) that explains where the difference comes from. §5 extends the exact work to every dimension up
@@ -420,7 +420,59 @@ about one explicit packing, and every decimal in it has to be rounded the right 
 - no new upper bound: $\kappa_3\le13.327,\ldots,\kappa_{30}\le1{,}654{,}023.6$
   (Bockhaus–Glazyrin) stand.
 
-## 10. Where a real attack would start
+## 10. Can a record be found here at all? The four doors, and where each one is locked
+
+A "record" means one of four things.  This repository has now tried to walk through all four, and
+the honest answer is that none of them opens — but they are locked for different reasons, and
+three of the locks are informative.
+
+| door | what a record would look like | state | the blocker |
+|---|---|---|---|
+| **lower bound, $d=3$** | $\kappa_3>7656/607=12.6129$ | open in the literature | needs the corona's combinatorics (§4c), which we could not reconstruct; every f-vector search without tangency is meaningless (§4a) |
+| **lower bound, $d=5,6,7$** | 41, 73 or 127 points at 60° | open in the literature | the records are jammed with $\rho=\sqrt{2/5},\sqrt{3/8},1/\sqrt3$ (§6a) and 157 restarts stop 0.78° short in $d=7$ (§6b) |
+| **lower bound, $d\ge8$** | beating 240, 4320, 196 560, … | **closed** | the records are code-theoretic (Barnes-Wall, Leech); a local lattice search cannot invent a code (§5c) |
+| **upper bound, any $d$** | $\kappa_3<13.327$, …, $\kappa_{30}<1\,654\,023.6$ | **closed to us** | Bockhaus-Glazyrin's bounds are semidefinite programs whose certificates are rounded matrices, verified block-by-block by Bernstein subdivision [BK26]; reproducing one is a project, not a calculation |
+
+**What is *not* a record, and should not be presented as one.**  Two things we found are exact
+and, as far as the sources we read go, unstated — but neither changes a bound:
+
+1. The exact hole depths of the record packings: $\rho(D_5)=\sqrt{2/5}$,
+   $\rho(E_6)=\sqrt{3/8}$, $\rho(E_7)=1/\sqrt3$, with $\rho(A_3)=\rho(D_4)=\rho(E_8)=1/\sqrt2$
+   (§6a).  These are *theorem-shaped*: the KKT residual is $10^{-16}$, the scaled hole vector
+   satisfies $\langle y,p\rangle=1$ exactly on its active set, and the pattern
+   $\rho^2=(n-1)/n$ holds in every dimension where a root lattice is a record.  A rigorous
+   proof reduces to a finite check over the Delone decomposition of each code — a check we have
+   done numerically but **not** rigorously, so it is stated as a certified computation, not a
+   theorem.
+2. The chain-versus-corona distinction (§4b): the value $666/53=12.566$ quoted in several places
+   as "the EKZ bound" is the *chain*, and EKZ's actual result is the *corona*, $12.6129$.  This
+   is a correction of a citation, not an improvement of a bound.
+
+**One route we closed this round, cheaply.**  Could the E-construction give a record in $d=4$?  The
+24-cell is edge-tangent and has $2f_1/f_0 = 2\cdot120/24 = 10$ (computed in
+`code/polytopes.py`), and cutting one vertex leaves it at exactly 10.0000 with a tangency spread
+of 29.9 % — the lift does nothing and the cut is inadmissible.  So this route is dead in $d=4$,
+and $\kappa_4\ge24$ still rests on the lattice.
+
+**One route we closed this round, cheaply.**  Could the E-construction give a record in $d=4$?  The
+24-cell is edge-tangent and has $2f_1/f_0 = 2\cdot120/24 = 10$ (computed in
+`code/polytopes.py`), and cutting one vertex leaves it at exactly 10.0000 with a tangency spread
+of 29.9 % — the E-construction does nothing and the cut is inadmissible.  So this route is dead in
+$d=4$, and $\kappa_4\ge24$ still rests on the lattice.
+
+**One open question this exercise did turn up.**  Every lower bound in our record table is a
+*lattice* kissing number, and that is the safe implication $\kappa_d\ge\tau^*(L)$, because every
+ball of a lattice packing has the same number of contacts.  The non-lattice kissing records —
+306, 510, 604, 841 for $d=9..12$ — do **not** automatically transfer: a *kissing configuration*
+is a spherical code, and the packing it generates has average contact number near 2, not 306.
+They transfer only if the published configuration is a periodic packing in which every ball has
+that many neighbours (a constant-contact packing).  Establishing which of the 2024-2026 records
+are of that kind, per paper, is a literature task with a clear payoff: it would raise the
+lower-bound column for whichever dimensions it applies to, and the average-kissing literature
+does not seem to have separated the two cases carefully.  We have not verified any of them, so
+this repository asserts nothing about it.
+
+## 11. Where a real attack would start
 
 If this project is to produce a bound, the order of work that seems right to us:
 
